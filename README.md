@@ -10,12 +10,27 @@ Open source CLI (Planned to change) based autoclicker that makes use of mouse si
 
 * Side buttons correspond to LMB and RMB, which could be reversed.
 * Inconsistency mode. Allows you to set offset between each click to emulate people's inconsistant clicking.
+* Brand new WinUi3 based GUI to improve user`s expirience !
 
 
 
 ## To do.
 - [x] Make an "Inconsistency mode".
-- [ ] Make UI version.
-- [ ] Make CLI x UI . So people could choose between.
+- [x] Make UI version.
+- [X] Make CLI x GUI . So people could choose between.
 
 
+
+
+## YESSS WE DID IT
+
+But still repository is f***ed up lol. I just don`t get it why VS Studio refused to push to repository so i basically dragged all the files.
+Please if there someone with IQ higher than 32 can you just please fix our repository 😭
+
+
+
+
+
+
+### Well what's next? 
+I don't know i'm trying to come up with new ideas.
