@@ -18,6 +18,7 @@ Open source CLI (Planned to change) based autoclicker that makes use of mouse si
 - [x] Make an "Inconsistency mode".
 - [x] Make UI version.
 - [X] Make CLI x GUI . So people could choose between.
+- [ ] Make a save system, that is compatible with both versions.
 
 
 
