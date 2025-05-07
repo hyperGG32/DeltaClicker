@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="DeltaClickerGUI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DeltaClickerGUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="DeltaClickerGUI"
+    SizeChanged="Window_SizeChanged"
+    
+    >
+    <Window.SystemBackdrop>
+        <DesktopAcrylicBackdrop  />
+        
+    </Window.SystemBackdrop>
+
+    <StackPanel Background="Transparent">
+        
+
+        <Border x:Name="AppTitleBar"  Grid.Column="1" VerticalAlignment="Top"  Background="Transparent"  Padding="10" >
+            
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ImageIcon Source="Assets/Square44x44Logo.targetsize-256.png" MaxWidth="35" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0">
+                </ImageIcon>
+                <TextBlock  HorizontalAlignment="Left"  Text="DeltaClicker"  Margin="0,8,0,0" FontFamily="Arial" FontWeight="Bold" FontSize="25" Grid.Column="1" Grid.Row="0" />
+            </Grid>
+            
+        </Border>
+        
+        <StackPanel Padding="20,20,0,0" Spacing="20" Background="Transparent">
+            
+            <StackPanel Orientation="Horizontal" Spacing="10">
+
+                <NumberBox x:Name="DelayBox" Width="229" SmallChange="1" LargeChange="10" SpinButtonPlacementMode="Inline" Minimum="1" PlaceholderText="Enter value" Maximum="65535" Header="Delay (ms):" ValueChanged="DelayBox_ValueChanged" Value="66" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Spacing="10">
+
+                <ComboBox x:Name="MouseLayoutComboBox" Width="229" Header="Mouse Layout:" SelectionChanged="MouseLayoutComboBox_SelectionChanged" SelectedIndex="0" >
+                    <ComboBoxItem Content="Layout A"/>
+                    <ComboBoxItem Content="Layout B"/>
+                </ComboBox>
+            </StackPanel>
+
+            <Expander x:Name="offsetExpander" Width="229"  >
+                <Expander.Header>
+                    <CheckBox x:Name="OffsetModeCheckBox"  Content="Enable Offset Mode" Checked="OffsetModeCheckBox_Checked"/>
+                </Expander.Header>
+                <Expander.Content>
+                    <NumberBox x:Name="OffsetBox" Width="180" SmallChange="1" LargeChange="10" SpinButtonPlacementMode="Inline" Minimum="1" PlaceholderText="Enter value" Maximum="65535" Header="Random Offset" ValueChanged="OffsetBox_ValueChanged" Value="5"/>
+                </Expander.Content>
+            </Expander>
+            
+        </StackPanel>
+        
+
+
+
+    </StackPanel>
+</Window>
