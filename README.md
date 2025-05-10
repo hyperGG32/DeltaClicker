@@ -11,6 +11,7 @@ Open-source CLIxGUI based autoclicker that makes use of mouse side buttons, to m
 * Side buttons correspond to LMB and RMB, which could be reversed.
 * Inconsistency mode. Allows you to set offset between each click to emulate people's inconsistant clicking.
 * Brand new WinUi3 based GUI to improve user`s expirience !
+* Your settings save ! So you can launch DeltaClicker and start clicking without tedoius input !!
 
 
 
