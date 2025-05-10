@@ -131,13 +131,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\DeltaClicker\DeltaClickerCore.cpp" />
-    <ClCompile Include="..\DeltaClicker\main.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="DeltaClickerCLI.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Documents\Download\DeltaclickerLogo.ico" />

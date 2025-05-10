@@ -18,8 +18,7 @@ char barabolya[] = R"(~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~    | |_| | |___| |___| |/ ___ \ |___| |___ | | |___| . \| |___|  _ <    ~
 ~    |____/|_____|_____|_/_/   \_\____|_____|___\____|_|\_\_____|_| \_\   ~
 ~                                                                         ~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~)";
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~)"; // barabolya
 
 
 
@@ -36,7 +35,22 @@ static void checkForInvalidInput() { // Checks for valid user input. If invalid,
 
 static void userInput() {
     char randomMode;
-    int delay, randomOffset = 0, LMB,RMB;
+    if (mainClicker.getLoadState()) { // Bloat
+		cout << "LOADED SETTINGS FROM FILE" << endl;
+		cout << "DELAY: " << mainClicker.getDelay() << endl;
+		cout << "RANDOM MODE: " << (mainClicker.getRandomMode() ? "YES" : "NO") << endl;
+		if (mainClicker.getRandomMode()) {
+			cout << "RANDOM OFFSET: " << mainClicker.getRandomOffset() << endl;
+		}
+        cout << "LAYOUT: " << ((mainClicker.getType() == 1) ? "LAYOUT A" : "LAYOUT B") << endl;
+		cout << "DO YOU WANT TO CHANGE SETTINGS? (Y/N): ";
+		char changeSettings;
+		cin >> changeSettings;
+		if (changeSettings == 'n' || changeSettings == 'N') {
+			return; // Exit if user doesn't want to change settings
+		}
+    }
+    int delay, randomOffset = 0, LMB, RMB, type;
     cout << "ENTER DELAY (in ms): ";
     cin >> delay;
     if (delay < 1) {
@@ -57,9 +71,9 @@ static void userInput() {
         }
     }
     cout << endl << "ENTER SIDE BUTTON" << endl << "1 - FRONT SIDE BUTTON FOR LEFT CLICK; BACK SIDE BUTTON FOR RIGHT CLICK\n2 - BACK SIDE BUTTON FOR LEFT CLICK; FRONT SIDE BUTTON FOR RIGHT CLICK \nDEFAULT - FIRST OPTION" << endl << "ANSWER: ";
-    cin >> LMB; // Listen for User Input
+    cin >> type; // Listen for User Input
     checkForInvalidInput();
-    switch (LMB) // Unoptimized unreadable thing
+    switch (type) // Unoptimized unreadable thing
     {
     case 1:
         LMB = VK_XBUTTON2;
@@ -90,6 +104,8 @@ static void userInput() {
     mainClicker.setRandomOffset(randomOffset); // Set random offset
 	mainClicker.setLMB(LMB); // Set left mouse button
 	mainClicker.setRMB(RMB); // Set right mouse button
+    mainClicker.setType(type);
+	mainClicker.saveData(); // Save data to file
 
     return;
 }
@@ -105,6 +121,7 @@ static void reloadSettings() {
         return;
     }
     cin.ignore(); // Clear the input buffer
+	mainClicker.setLoaded(false);
     userInput(); // Recall mainProgram
     return; // Exit the current instance to avoid recursion stack overflow
 }
@@ -114,16 +131,13 @@ static void mainProgram() {
 	cout << barabolya << endl; // Print the logo
     userInput();
     mainClicker.start(); // Start the clicker
-
-
-
     cout << "Press ESC to exit or any other key to restart settings..." << endl; 
     while (true) {
         if (_kbhit()) {
             reloadSettings();
+            cout << "Press ESC to exit or any other key to restart settings..." << endl;
         }
 		Sleep(200); // Sleep for 200ms to avoid high CPU usage 
-        
     }
 
 }
