@@ -1,0 +1,58 @@
+<Window
+    x:Class="DeltaClickerGUI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DeltaClickerGUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="DeltaClickerGUI">
+
+    <Window.SystemBackdrop>
+        <DesktopAcrylicBackdrop />
+    </Window.SystemBackdrop>
+
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border x:Name="AppTitleBar" Grid.Row="0" VerticalAlignment="Top" Background="Transparent" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ImageIcon Source="Assets/Square44x44Logo.targetsize-256.png" MaxWidth="35" HorizontalAlignment="Left" Grid.Column="0" />
+                <TextBlock Text="DeltaClicker" FontFamily="Arial" FontWeight="Bold" FontSize="25" VerticalAlignment="Center" Grid.Column="1" />
+            </Grid>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" Padding="20,20,20,20">
+            <Grid HorizontalAlignment="Center" MaxWidth="400" MinWidth="200" Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <NumberBox x:Name="DelayBox" Grid.Row="0" HorizontalAlignment="Stretch" SmallChange="1" LargeChange="10" SpinButtonPlacementMode="Inline" Minimum="1" Maximum="65535" PlaceholderText="Enter value" Header="Delay (ms):" ValueChanged="DelayBox_ValueChanged" Loaded="DelayBox_Loaded" />
+
+                <ComboBox x:Name="MouseLayoutComboBox" Grid.Row="1" Header="Mouse Layout:" Margin="0,20,0,0" HorizontalAlignment="Stretch" SelectionChanged="MouseLayoutComboBox_SelectionChanged" Loaded="MouseLayoutComboBox_Loaded">
+                    <ComboBoxItem Content="Layout A"/>
+                    <ComboBoxItem Content="Layout B"/>
+                </ComboBox>
+
+                <Expander x:Name="offsetExpander" Grid.Row="2" Margin="0,20,0,0" HorizontalAlignment="Stretch">
+                    <Expander.Header>
+                        <CheckBox x:Name="OffsetModeCheckBox" Content="Enable Offset Mode" Click="OffsetModeCheckBox_Click" Loaded="OffsetModeCheckBox_Loaded"/>
+                    </Expander.Header>
+                    <Expander.Content>
+                        <NumberBox x:Name="OffsetBox" HorizontalAlignment="Stretch" SmallChange="1" LargeChange="10" SpinButtonPlacementMode="Inline" Minimum="1" Maximum="65535" PlaceholderText="Enter value" Header="Random Offset" ValueChanged="OffsetBox_ValueChanged" Loaded="OffsetBox_Loaded"/>
+                    </Expander.Content>
+                </Expander>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Window>
