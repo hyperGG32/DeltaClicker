@@ -28,4 +28,4 @@ Make sure to constantly check for new updates!!!!!!!!
 
 
 ### Well what's next? 
-Some new clicking modes.
+Some new clicking modes and CLI revamp.
