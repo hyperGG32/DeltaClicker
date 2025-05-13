@@ -54,7 +54,7 @@ namespace winrt::DeltaClickerGUI::implementation
         }
 
         
-		com_ptr<IWindowNative> windowNative = this->try_as<IWindowNative>(); // Section of code about scaling and disabling resizing, so the window stays constant. It still does not disable double tap fullscreen.
+		/*com_ptr<IWindowNative> windowNative = this->try_as<IWindowNative>(); 
         HWND hwnd{};
         windowNative->get_WindowHandle(&hwnd);
 
@@ -64,15 +64,15 @@ namespace winrt::DeltaClickerGUI::implementation
         OutputDebugStringA(("Screen Width" + std::to_string(screenWidth)).c_str());
 		OutputDebugStringA(("Screen Height: " + std::to_string(screenHeight)).c_str());
 
-
-        float scaleX = screenWidth / 1920.0f;
-        float scaleY = screenHeight / 1080.0f;
+        float scale = 0.05f * screenHeight;
+        float scaleX = 6 * scale;
+        float scaleY = 10 * scale;
 
         LONG style = GetWindowLong(hwnd, GWL_STYLE);
         style &= ~WS_MAXIMIZEBOX; 
         style &= ~WS_THICKFRAME;
         SetWindowLong(hwnd, GWL_STYLE, style);
-        SetWindowPos(hwnd, HWND_TOP, 0, 0, static_cast<int>(376 * scaleX), static_cast<int>(520 * scaleY), SWP_NOMOVE);
+        SetWindowPos(hwnd, HWND_TOP, 0, 0, static_cast<int>(scaleX), static_cast<int>(scaleY), SWP_NOMOVE); */
 		
     }
     
