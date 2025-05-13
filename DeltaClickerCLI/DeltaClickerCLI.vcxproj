@@ -135,9 +135,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="resource2.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\Documents\Download\DeltaclickerLogo.ico" />
+    <ResourceCompile Include="DeltaClickerCLI1.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

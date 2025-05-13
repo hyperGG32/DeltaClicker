@@ -12,11 +12,15 @@
         <DesktopAcrylicBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid Background="Transparent">
+    <Grid Background="Transparent"  >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            
+        </Grid.ColumnDefinitions>
 
         <Border x:Name="AppTitleBar" Grid.Row="0" VerticalAlignment="Top" Background="Transparent" Padding="10">
             <Grid>
@@ -30,12 +34,15 @@
         </Border>
 
         <ScrollViewer Grid.Row="1" Padding="20,20,20,20">
-            <Grid HorizontalAlignment="Center" MaxWidth="400" MinWidth="200" Width="Auto">
+            <Grid HorizontalAlignment="Center"   >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
                 <NumberBox x:Name="DelayBox" Grid.Row="0" HorizontalAlignment="Stretch" SmallChange="1" LargeChange="10" SpinButtonPlacementMode="Inline" Minimum="1" Maximum="65535" PlaceholderText="Enter value" Header="Delay (ms):" ValueChanged="DelayBox_ValueChanged" Loaded="DelayBox_Loaded" />
 
