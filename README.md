@@ -22,10 +22,11 @@ Make sure to constantly check for new updates!!!!!!!!
 - [x] Make UI version.
 - [X] Make CLI x GUI . So people could choose between.
 - [X] Make a save system, that is compatible with both versions.
+- [ ] Revamp both versions
 
 
 
 
 
 ### Well what's next? 
-Some new clicking modes and CLI revamp.
+Some new clicking modes and revamp.
