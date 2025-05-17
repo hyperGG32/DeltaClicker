@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">
@@ -93,6 +94,7 @@
     <Image Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-256.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="..\DeltaClickerCLI\Assets\DeltaclickerLogo.ico" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">
@@ -111,5 +113,8 @@
   <ItemGroup>
     <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natvis" />
     <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natstepfilter" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DeltaClickerGUI.rc" />
   </ItemGroup>
 </Project>
