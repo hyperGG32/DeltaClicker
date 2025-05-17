@@ -40,18 +40,7 @@ namespace winrt::DeltaClickerGUI::implementation
         SetTitleBar(AppTitleBar());
 		
 		mainClicker = Clicker();
-        mainClicker.loadData();
 		mainClicker.start();
-		
-
-        if (mainClicker.getType() == 1) {
-            mainClicker.setLMB(VK_XBUTTON2);
-            mainClicker.setRMB(VK_XBUTTON1);
-        }
-        else if (mainClicker.getType() == 2) {
-            mainClicker.setLMB(VK_XBUTTON1);
-            mainClicker.setRMB(VK_XBUTTON2);
-        }
 
         
 		/*com_ptr<IWindowNative> windowNative = this->try_as<IWindowNative>(); 

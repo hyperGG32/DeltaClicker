@@ -2,6 +2,9 @@
 #include "../DeltaClicker/DeltaClickerCore.hpp"
 #include <iostream>
 #include <conio.h>
+#include <cmath>
+#undef max
+#include <limits>
 
 
 
@@ -22,57 +25,79 @@ char barabolya[] = R"(~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
-
-
-static void checkForInvalidInput() { // Checks for valid user input. If invalid, exits program. Rewrite for listening for valid user input
+static bool checkInput() { // Checks for valid user input. If invalid, clears the input buffer
     if (cin.fail()) {
-        cout << "INVALID INPUT. PROGRAM CANNOT CONTINUE FUNCTIONING, EXITING...";
-        Sleep(2000);
-        exit(-1);
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return false;
     }
-    return;
+    return true;
 }
 
-static void userInput() {
-    char randomMode;
-    if (mainClicker.getLoadState()) { // Bloat
-		cout << "LOADED SETTINGS FROM FILE" << endl;
-		cout << "DELAY: " << mainClicker.getDelay() << endl;
-		cout << "RANDOM MODE: " << (mainClicker.getRandomMode() ? "YES" : "NO") << endl;
-		if (mainClicker.getRandomMode()) {
-			cout << "RANDOM OFFSET: " << mainClicker.getRandomOffset() << endl;
-		}
-        cout << "LAYOUT: " << ((mainClicker.getType() == 1) ? "LAYOUT A" : "LAYOUT B") << endl;
-		cout << "DO YOU WANT TO CHANGE SETTINGS? (Y/N): ";
-		char changeSettings;
-		cin >> changeSettings;
-		if (changeSettings == 'n' || changeSettings == 'N') {
-			return; // Exit if user doesn't want to change settings
-		}
-    }
-    int delay, randomOffset = 0, LMB, RMB, type;
+static int delayInput() {
+    system("cls");
+    int delay;
     cout << "ENTER DELAY (in ms): ";
-    cin >> delay;
+    cin >> delay; // Here's kbhit thing won't work, as delay is multicharacter
+    if (!(checkInput())) {
+		return mainClicker.getDelay(); // If invalid input, return previous value
+    }
     if (delay < 1) {
         delay = 1;
         cout << "DELAY WAS SET TO 1, BECAUSE IT WAS LOWER/NEGATIVE";
     }
-    checkForInvalidInput();
-    cout << endl << "ENTER RANDOM MODE (Y/N): ";
-    cin >> randomMode;
-    checkForInvalidInput();
-    if (randomMode == 'y' || randomMode == 'Y') {
-        cout << endl << "ENTER +- OFFSET (in ms): ";
-        cin >> randomOffset;
-        checkForInvalidInput();
-        if (randomOffset > delay || randomOffset < 0) { // Check for valid offset
-            randomOffset = delay;
-            cout << "OFFSET WAS SET TO DELAY VALUE, BECAUSE IT WAS BIGGER/NEGATIVE";
+    mainClicker.setDelay(delay);
+    mainClicker.saveData();
+    return delay;
+}
+
+static bool randomModeInput() {
+    system("cls");
+	char randomMode;
+    cout << "ENTER RANDOM MODE (Y/N)";
+    while (true) {
+        if (_kbhit()) {
+            randomMode = _getch();
+            break;
         }
+        Sleep(200);
     }
-    cout << endl << "ENTER SIDE BUTTON" << endl << "1 - FRONT SIDE BUTTON FOR LEFT CLICK; BACK SIDE BUTTON FOR RIGHT CLICK\n2 - BACK SIDE BUTTON FOR LEFT CLICK; FRONT SIDE BUTTON FOR RIGHT CLICK \nDEFAULT - FIRST OPTION" << endl << "ANSWER: ";
-    cin >> type; // Listen for User Input
-    checkForInvalidInput();
+    mainClicker.setRandomMode(randomMode == 'y' || randomMode == 'Y');
+    mainClicker.saveData();
+	return (randomMode == 'y' || randomMode == 'Y');
+}
+
+static int randomOffsetInput(int delay) {
+    system("cls");
+	int randomOffset;
+    cout << "ENTER +- OFFSET (in ms): ";
+    cin >> randomOffset; // Same as delay
+    if (!(checkInput())) {
+        return mainClicker.getDelay(); // If invalid input, return previous value
+    }
+    if (randomOffset > delay || randomOffset < 0) { // Check for valid offset
+        randomOffset = delay;
+        cout << "OFFSET WAS SET TO DELAY VALUE, BECAUSE IT WAS BIGGER/NEGATIVE";
+    }
+	mainClicker.setRandomOffset(randomOffset);
+    mainClicker.saveData();
+	return randomOffset;
+}
+
+static int typeInput() {
+    system("cls");
+    int type, LMB, RMB;
+    cout << "ENTER SIDE BUTTON LAYOUT (1/2)";
+    while (true) {
+        if (_kbhit()) {
+            type = _getch() - 48;;
+            break;
+        }
+        Sleep(200);
+    }
+    if (type < 1 || type > 2) {
+        type = 1;
+    }
     switch (type) // Unoptimized unreadable thing
     {
     case 1:
@@ -89,62 +114,93 @@ static void userInput() {
         RMB = VK_XBUTTON1;
         break;
     }
-    cout << endl;
-	if (randomOffset > 0) {
-		mainClicker.setRandomOffset(randomOffset); // Set random offset
-		mainClicker.setRandomMode(true); // Set random mode
-    }
-    else {
-		mainClicker.setRandomMode(false); // Set random mode
-		mainClicker.setRandomOffset(0); // Set random offset
-    }
-
-    mainClicker.setDelay(delay); // Set delay
-    mainClicker.setRandomMode(randomMode == 'y' || randomMode == 'Y'); // Set random mode
-    mainClicker.setRandomOffset(randomOffset); // Set random offset
-	mainClicker.setLMB(LMB); // Set left mouse button
-	mainClicker.setRMB(RMB); // Set right mouse button
+	mainClicker.setLMB(LMB);
+	mainClicker.setRMB(RMB);
     mainClicker.setType(type);
-	mainClicker.saveData(); // Save data to file
+	mainClicker.saveData();
+    return type;
+}
 
+
+static void userInput() {
+    system("cls");
+    cout << barabolya << endl;
+    if (mainClicker.getLoadState()) { // Much bloat
+        mainClicker.start();
+		cout << "~    CURRENT SETTINGS                                                     ~" << endl;
+        cout << "~    DELAY: " << mainClicker.getDelay();
+		for (int i = 0; i < 62 - static_cast<int>(log10(mainClicker.getDelay())) - 1; ++i) { // Some bloat
+			cout << " ";
+		}
+        cout << "~" << endl;
+		cout << "~    RANDOM MODE: " << (mainClicker.getRandomMode() ? "YES                                                     ~" : "NO                                                      ~") << endl;
+		if (mainClicker.getRandomMode()) {
+            cout << "~    RANDOM OFFSET: " << mainClicker.getRandomOffset();
+			for (int i = 0; i < 54 - static_cast<int>(log10((mainClicker.getRandomOffset() == 0) ? 1 : mainClicker.getRandomOffset())) - 1; ++i) { // So if it's zero in won't break anything
+				cout << " ";
+			}
+			cout << "~" << endl;
+		}
+        cout << "~    LAYOUT: " << ((mainClicker.getType() == 1) ? "A" : "B") << "                                                            ~" << endl;
+        cout << R"(~                                                                         ~
+~    CHANGE DELAY - D                           CHANGE RANDOM MODE - M    ~
+~    CHANGE RANDOM OFFSET - O                   CHANGE LAYOUT - L         ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~)" << endl;
+        while (true) {
+            if (_kbhit()) {
+                char ch = _getch();
+                switch (ch) { // Uh it is very bulky, potentially buggy and eats memory, but I hope it works
+                case 'd':
+                case 'D':
+                    delayInput();
+                    if (mainClicker.getRandomOffset() > mainClicker.getDelay()) { // When changing delay, avoid random offset being higher than delay
+                        mainClicker.setRandomOffset(mainClicker.getDelay());
+                        mainClicker.saveData();
+                    }
+                    userInput();
+                    return;
+                    break;
+                case 'm':
+                case 'M':
+                    randomModeInput();
+                    userInput();
+                    return;
+                    break;
+                case 'o':
+                case 'O':
+                    randomOffsetInput(mainClicker.getDelay());
+                    userInput();
+                    return;
+                    break;
+                case 'l':
+                case 'L':
+					typeInput();
+					userInput();
+					return;
+					break;
+				case 27:
+					exit(0);
+					return;
+					break;
+                }
+            }
+            Sleep(200);
+        }
+    }
+    delayInput();
+    if (randomModeInput()) {
+		randomOffsetInput(mainClicker.getDelay());
+    }
+	typeInput();
+    cout << endl;
+    mainClicker.start();
+    mainClicker.setLoaded(true);
+    userInput();
     return;
 }
 
 
-
-static void reloadSettings() {
-    char ch = _getch(); // Get the pressed key
-    system("cls"); // Clear the console
-	cout << barabolya << endl; // Print the logo
-    if (ch == 27) { // ESC key to exit
-        exit(0);
-        return;
-    }
-    cin.ignore(); // Clear the input buffer
-	mainClicker.setLoaded(false);
-    userInput(); // Recall mainProgram
-    return; // Exit the current instance to avoid recursion stack overflow
-}
-
-
-static void mainProgram() {
-	cout << barabolya << endl; // Print the logo
-    userInput();
-    mainClicker.start(); // Start the clicker
-    cout << "Press ESC to exit or any other key to restart settings..." << endl; 
-    while (true) {
-        if (_kbhit()) {
-            reloadSettings();
-            cout << "Press ESC to exit or any other key to restart settings..." << endl;
-        }
-		Sleep(200); // Sleep for 200ms to avoid high CPU usage 
-    }
-
-}
-
-
-
 int main() {
-    mainProgram(); // Main program
+    userInput();
     return 0; // WTF
 }

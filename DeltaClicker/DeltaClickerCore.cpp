@@ -21,12 +21,8 @@ static int randInt(int min, int max) { // Generate random integer between min an
 
 const void Clicker::mainLoop()
 {
-	
-	
     while (running)
     {
-		
-		
         if (GetAsyncKeyState(LMB) < 0) { // Listen for button presses
 			if (randomOffset != 0) {
 				offset = randInt(0, randomOffset); // Generate offset
@@ -53,9 +49,9 @@ const void Clicker::mainLoop()
 
 Clicker::Clicker()
 {
-	bool created = createSaveFiles();
-	running = false;
+	bool created = createSaveFiles(); 
 	offset = 0;
+	loaded = false;
 	if (!(loadData() && created)) { // If not loaded, set to default
 		type = 1;
 		
@@ -133,7 +129,6 @@ void Clicker::start()
 	if (running) {
 		return; // Already running
 	}
-	OutputDebugStringA("\n\n\n\nStarting Clicker...\n\n\n\n\n"); // Debug message
     thread worker(&Clicker::mainLoop, this); // Pass pointer to member function and object instance
     running = true;
 	worker.detach(); // Detach the thread to run independently
@@ -214,5 +209,16 @@ bool Clicker::loadData()
 		file.close();
 		return false; // If the settings can't be parsed, return false
 	}
+
+	if (type == 1) { // Bloat
+		LMB = VK_XBUTTON2;
+		RMB = VK_XBUTTON1;
+	}
+	else {
+		LMB = VK_XBUTTON1;
+		RMB = VK_XBUTTON2;
+	}
+
 	file.close();
+	return true;
 }
