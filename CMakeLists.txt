@@ -49,7 +49,7 @@ target_include_directories(imgui_lib PUBLIC
 )
 target_link_libraries(imgui_lib PUBLIC glfw OpenGL::GL)
 
-add_executable(DeltaClickerGUI
+add_executable(DeltaClickerGUI WIN32
         src/gui/main.cpp
 )
 
