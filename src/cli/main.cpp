@@ -11,7 +11,7 @@
 
 using namespace std;
 
-Clicker mainClicker; // Create an instance of Clicker
+static Clicker mainClicker; // Create an instance of Clicker
 
 
 

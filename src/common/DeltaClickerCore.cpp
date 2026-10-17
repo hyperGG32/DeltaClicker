@@ -104,6 +104,8 @@ void Clicker::setLoaded(bool load) {
 
 void Clicker::setType(int t) {
 	type = t;
+	setLMB(type == 1 ? VK_XBUTTON2 : VK_XBUTTON1);
+	setRMB(type == 1 ? VK_XBUTTON1 : VK_XBUTTON2);
 }
 
 int Clicker::getDelay() {
@@ -131,8 +133,9 @@ void Clicker::start()
 	if (running) {
 		return; // Already running
 	}
+	running = true;
     thread worker(&Clicker::mainLoop, this); // Pass pointer to member function and object instance
-    running = true;
+
 	worker.detach(); // Detach the thread to run independently
 }
 
