@@ -1,11 +1,12 @@
 #include <windows.h>
-#include "../DeltaClicker/DeltaClickerCore.hpp"
+
 #include <iostream>
 #include <conio.h>
 #include <cmath>
 #undef max
 #include <limits>
 
+#include "DeltaClickerCore.hpp"
 
 
 using namespace std;

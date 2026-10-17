@@ -1,3 +1,5 @@
+#include "DeltaClickerCore.hpp"
+
 #include <conio.h> // For kbhit()
 #include <cstdlib>
 #include <ctime> 
@@ -7,7 +9,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include "../../DeltaClicker/DeltaClickerCore.hpp"
+
 
 using namespace std;
 
