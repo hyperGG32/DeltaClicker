@@ -61,37 +61,37 @@ int main() {
         ImGui::Separator();
 
         ImGui::SetNextItemWidth(-1);
-        if (ImGui::SliderInt("##delay", &delay, 1, 1000, "Затримка: %d мс"))
+        if (ImGui::SliderInt("##delay", &delay, 1, 1000, "Delay: %d мс"))
             clicker.setDelay(delay);
 
-        if (ImGui::Checkbox("Випадковий режим", &randomMode))
+        if (ImGui::Checkbox("Random mode", &randomMode))
             clicker.setRandomMode(randomMode);
 
         ImGui::BeginDisabled(!randomMode);
         ImGui::SetNextItemWidth(-1);
-        if (ImGui::SliderInt("##offset", &offset, 0, 500, "Розкид: %d мс"))
+        if (ImGui::SliderInt("##offset", &offset, 0, 500, "Offset: %d мс"))
             clicker.setRandomOffset(offset);
         ImGui::EndDisabled();
 
-        ImGui::TextDisabled("Розкладка кнопок");
+        ImGui::TextDisabled("Button layout");
         bool t_changed = false;
-        t_changed |= ImGui::RadioButton("Тип 1", &type, 1); ImGui::SameLine();
-        t_changed |= ImGui::RadioButton("Тип 2", &type, 2);
+        t_changed |= ImGui::RadioButton("Type 1", &type, 1); ImGui::SameLine();
+        t_changed |= ImGui::RadioButton("Type 2", &type, 2);
         if (t_changed) {
             clicker.setType(type);
-            
+
 
         }
 
         ImGui::PushStyleColor(ImGuiCol_Button,
             running ? ImVec4(0.75f, 0.22f, 0.22f, 1.f) : ImVec4(0.20f, 0.55f, 0.30f, 1.f));
-        if (ImGui::Button(running ? "Зупинити" : "Запустити", {-1, 44})) {
+        if (ImGui::Button(running ? "Stop" : "Start", {-1, 44})) {
             running = !running;
             if (running) clicker.start(); else clicker.stop();
         }
         ImGui::PopStyleColor();
 
-        if (ImGui::Button("Зберегти налаштування", {-1, 0}))
+        if (ImGui::Button("Save options", {-1, 0}))
             clicker.saveData();
 
         ImGui::End();
